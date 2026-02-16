@@ -6,24 +6,32 @@ using System.Threading.Tasks;
 
 namespace Vehicle_parking_Project
 {
-    internal  abstract class Vehicle
+    internal  abstract class Vehicle: IPrintable
     {
-        public static int ID = 0;
+        private static int StaticID;
        
-    public int Price { get; private set; }
+        public int Id { get; private set; }
+        public int Price { get; private set; }
 
         public int Length { get; private set; }
 
         public Vehicle( int price, int length)
         {
-            ++ID;
+           Id= ++StaticID;
             Price = price;
             Length = length;
         }
-        public virtual double calcMoney(double NumOfHours)
+
+        public static void RollbackId()
+        {
+            StaticID--;
+        }
+        public virtual double CalcMoney(double NumOfHours)
         {
             return NumOfHours * Price;
         }
 
+        public abstract void PrintReceipt(double hours, double fees);
+        
     }
 }

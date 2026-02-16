@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 
 namespace Vehicle_parking_Project
 {
+    //manager.AddVehicle<Car>();
 
-   
     internal class Program
     {
         static void Main(string[] args)
         {
 
             Console.WriteLine("\t\t\t\t\tWelcome to the Vehicle Parking System!\n\n\n");
-            ParkingManager manager = new ParkingManager();
+            ParkingManager manager = ParkingManager.GetObject();
 
                int operation = 0;
               
@@ -27,37 +27,42 @@ namespace Vehicle_parking_Project
                 Console.WriteLine("2. Remove Vehicle");
                 Console.WriteLine("3. Show Parking Status");
                 Console.WriteLine("4. Exit\n");
-                operation = int.Parse(Console.ReadLine());
+                  int.TryParse(Console.ReadLine(),out operation);
 
                 if (operation == 1) {
-                    List<string> VehiclesTypes = new List<string>
+                    List<Type> VehiclesTypes = new List<Type>
                     {
-                        "Car","Bus","Motocycle","Truck"
+                        
+                        typeof(Car),
+                        typeof(Bus),
+                        typeof(Motocycle),
+                        typeof(Truck),
+
                     };
                     Console.WriteLine("Please select the type of vehicle you want to add:\n");
 
                   for(int i=0;i< VehiclesTypes.Count; i++)
                     {
-                        Console.WriteLine($"{i + 1}. {VehiclesTypes[i]} ");
+                        Console.WriteLine($"{i + 1}. {VehiclesTypes[i].Name} ");
                     }
 
-                    int vehicleType = int.Parse(Console.ReadLine());
-                    
-                   
+                     int.TryParse(Console.ReadLine(),out int vehicleType);
 
+
+                    
                     switch (vehicleType)
                     {
                         case 1:
-                            manager.AddVehicle(new Car());
+                            manager.AddVehicle<Car>();
                             break;
                         case 2:
-                            manager.AddVehicle(new Bus());
+                            manager.AddVehicle<Bus>();
                             break;
                         case 3:
-                            manager.AddVehicle(new Motorcycle());
+                            manager.AddVehicle< Motocycle>();
                             break;
                         case 4:
-                            manager.AddVehicle(new Truck());
+                            manager.AddVehicle<Truck>();
                             break;
                        
                         default:
@@ -71,7 +76,7 @@ namespace Vehicle_parking_Project
                 else if (operation == 2)
                 {
                     Console.WriteLine("Please enter the ID of the vehicle to remove:");
-                    int id = int.Parse(Console.ReadLine());
+                    int.TryParse(Console.ReadLine(), out int id );
                     manager.RemoveVehicle(id);
                 }
                 else if (operation == 3)

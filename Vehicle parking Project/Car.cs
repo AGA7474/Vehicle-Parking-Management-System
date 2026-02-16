@@ -12,6 +12,10 @@ namespace Vehicle_parking_Project
         {
         }
 
+        public override void PrintReceipt(double hours, double fees)
+        {
+            Console.WriteLine($"Car Receipt - ID: {Id} - Hours: {hours} - Total: {fees}$");
+        }
     }
     
 }

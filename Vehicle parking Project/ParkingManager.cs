@@ -13,20 +13,20 @@ namespace Vehicle_parking_Project
         int cnt = 0;
        const int TotalArea = 100;
         List<int> ParkingSlots = new List<int>();
-        Dictionary<int, bool> vehicleInParking = new Dictionary<int, bool>();
         Dictionary<int, Vehicle> vehiclesById = new Dictionary<int, Vehicle>();
-        public ParkingManager()
+        static private ParkingManager Manager = new ParkingManager();
+        private ParkingManager()
         {
             for (int i = 0; i < TotalArea; i++)
             {
                 ParkingSlots.Add(0);
             }
 
-            for (int i = 0; i < 100; i++)
-            {
-              
-               vehicleInParking[i] = false;
-            }
+        }
+
+        public static ParkingManager GetObject()
+        {
+            return Manager;
         }
 
         private int CheckSpace(int size)
@@ -52,70 +52,67 @@ namespace Vehicle_parking_Project
            
             return -1;
         }
-        public void AddVehicle( Object obj)
+        public void AddVehicle<T>() where T: Vehicle, new() 
         {
-            if (obj is Vehicle vehicle)
+
+            T vehicle = new T();
+            int startIndex = CheckSpace(vehicle.Length);
+            if (startIndex == -1)
             {
-                
-             
-                if (CheckSpace(vehicle.Length)==-1)
-                {
-                    Vehicle.ID--;
-                    Console.WriteLine("No space available for this vehicle.");
                     
+                    Console.WriteLine("No space available for this vehicle.");
+                Vehicle.RollbackId();
                     ShowParkingStatus();
                    
                     return;
 
-                }
+            }
                
-                int startIndex = CheckSpace(vehicle.Length);
+               
                
                 for (int i = startIndex; i < startIndex + vehicle.Length; i++)
                 {
-                    ParkingSlots[i] = Vehicle.ID; 
+                    ParkingSlots[i] = vehicle.Id; 
                 }
 
-                vehicleInParking[Vehicle.ID] = true;
-                vehiclesById[Vehicle.ID] = vehicle;
+                vehiclesById[vehicle.Id] = vehicle;
                 Console.WriteLine("Vehicle added successfully.");
 
-                Console.WriteLine($"your Vehicle's ID is : {Vehicle.ID} ");
+                Console.WriteLine($"your Vehicle's ID is : {vehicle.Id} ");
 
                
                 Console.WriteLine($"Your Vehicle take slots from {startIndex+1} to {startIndex+vehicle.Length}");
-            }
-            else
-            {
-                Console.WriteLine("Invalid vehicle type.");
-            }
+            
+           
         }
 
         public void RemoveVehicle(int id)
         {
 
             
-            if ( id<=0 || vehicleInParking[id] == false)
+            if (!vehiclesById.ContainsKey(id))
             {
                 Console.WriteLine("This vehicle is not in the parking lot.");
                 return;
             }
             else
             {
+
+
                 for (int i = 0; i < ParkingSlots.Count; i++)
                 {
                     if (ParkingSlots[i] == id)
                     {
                         ParkingSlots[i] = 0;
-                        break;
+                      
                     }
                 }
-                vehicleInParking[id] = false;
+                Vehicle vehicle = vehiclesById[id];
                 Console.WriteLine("How long was your vehicle parked? Please enter the number of hours");
-                double NumOfHours = int.Parse(Console.ReadLine());
+                double.TryParse(Console.ReadLine(), out double NumOfHours);
+                vehicle.PrintReceipt(NumOfHours, vehicle.CalcMoney(NumOfHours));
+                vehiclesById.Remove(id);
                 Console.WriteLine("Vehicle removed successfully.");
-                Console.WriteLine($"The total parking fee is : {vehiclesById[id].calcMoney(NumOfHours)}");
-
             }
         }
 

@@ -6,13 +6,8 @@ using System.Threading.Tasks;
 
 namespace Vehicle_parking_Project
 {
-    internal class Motorcycle : Vehicle
+    public interface IPrintable
     {
-        public Motorcycle() : base( 5, 2)
-        {
-        }
-
-       
+        void PrintReceipt(double hours, double fees);
     }
-  
 }

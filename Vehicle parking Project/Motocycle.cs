@@ -6,17 +6,16 @@ using System.Threading.Tasks;
 
 namespace Vehicle_parking_Project
 {
-    internal class Bus : Vehicle
+    internal class Motocycle : Vehicle
     {
-        public Bus() : base( 15,10 )
+        public Motocycle() : base( 5, 2)
         {
         }
 
         public override void PrintReceipt(double hours, double fees)
         {
-            Console.WriteLine($"Bus Receipt - ID: {Id} - Hours: {hours} - Total: {fees}$");
+            Console.WriteLine($"Motorcycle Receipt - ID: {Id} - Hours: {hours} - Total: {fees}$");
         }
-
     }
-    
+  
 }
