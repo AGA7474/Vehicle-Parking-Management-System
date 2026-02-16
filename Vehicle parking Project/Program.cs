@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Vehicle_parking_Project
 {
-    //manager.AddVehicle<Car>();
+    
 
     internal class Program
     {
@@ -16,8 +16,16 @@ namespace Vehicle_parking_Project
 
             Console.WriteLine("\t\t\t\t\tWelcome to the Vehicle Parking System!\n\n\n");
             ParkingManager manager = ParkingManager.GetObject();
+            List<Type> VehiclesTypes = new List<Type>
+                    {
 
-               int operation = 0;
+                        typeof(Car),
+                        typeof(Bus),
+                        typeof(Motocycle),
+                        typeof(Truck),
+
+                    };
+            int operation = 0;
               
             while (operation != 4)
             {
@@ -30,15 +38,7 @@ namespace Vehicle_parking_Project
                   int.TryParse(Console.ReadLine(),out operation);
 
                 if (operation == 1) {
-                    List<Type> VehiclesTypes = new List<Type>
-                    {
-                        
-                        typeof(Car),
-                        typeof(Bus),
-                        typeof(Motocycle),
-                        typeof(Truck),
-
-                    };
+                    
                     Console.WriteLine("Please select the type of vehicle you want to add:\n");
 
                   for(int i=0;i< VehiclesTypes.Count; i++)
