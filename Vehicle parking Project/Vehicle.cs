@@ -9,13 +9,14 @@ namespace Vehicle_parking_Project
     internal  abstract class Vehicle
     {
         public static int ID = 0;
-        public int Price { get; private set; }
+       
+    public int Price { get; private set; }
 
         public int Length { get; private set; }
 
         public Vehicle( int price, int length)
         {
-            ID = ++ID;
+            ++ID;
             Price = price;
             Length = length;
         }

@@ -30,11 +30,16 @@ namespace Vehicle_parking_Project
                 operation = int.Parse(Console.ReadLine());
 
                 if (operation == 1) {
+                    List<string> VehiclesTypes = new List<string>
+                    {
+                        "Car","Bus","Motocycle","Truck"
+                    };
                     Console.WriteLine("Please select the type of vehicle you want to add:\n");
-                    Console.WriteLine("1. Car");
-                    Console.WriteLine("2. Bus");
-                    Console.WriteLine("3. Motorcycle");
-                    Console.WriteLine("4. Truck\n");
+
+                  for(int i=0;i< VehiclesTypes.Count; i++)
+                    {
+                        Console.WriteLine($"{i + 1}. {VehiclesTypes[i]} ");
+                    }
 
                     int vehicleType = int.Parse(Console.ReadLine());
                     
@@ -54,6 +59,7 @@ namespace Vehicle_parking_Project
                         case 4:
                             manager.AddVehicle(new Truck());
                             break;
+                       
                         default:
                             Console.WriteLine("Invalid vehicle type.");
                             break;

@@ -52,25 +52,25 @@ namespace Vehicle_parking_Project
            
             return -1;
         }
-        public void AddVehicle( Vehicle obj)
+        public void AddVehicle( Object obj)
         {
             if (obj is Vehicle vehicle)
             {
-                Console.WriteLine(vehicle.Length); 
-                Console.WriteLine($"count = {ParkingSlots.Count}");
+                
              
                 if (CheckSpace(vehicle.Length)==-1)
                 {
                     Vehicle.ID--;
                     Console.WriteLine("No space available for this vehicle.");
-                    Console.WriteLine($"Only free space is {cnt} m\n");
+                    
+                    ShowParkingStatus();
                    
                     return;
 
                 }
                
                 int startIndex = CheckSpace(vehicle.Length);
-                Console.WriteLine(startIndex);
+               
                 for (int i = startIndex; i < startIndex + vehicle.Length; i++)
                 {
                     ParkingSlots[i] = Vehicle.ID; 
@@ -79,7 +79,11 @@ namespace Vehicle_parking_Project
                 vehicleInParking[Vehicle.ID] = true;
                 vehiclesById[Vehicle.ID] = vehicle;
                 Console.WriteLine("Vehicle added successfully.");
-                Console.WriteLine($"your Vehicle's ID is : {Vehicle.ID} \n");
+
+                Console.WriteLine($"your Vehicle's ID is : {Vehicle.ID} ");
+
+               
+                Console.WriteLine($"Your Vehicle take slots from {startIndex+1} to {startIndex+vehicle.Length}");
             }
             else
             {
@@ -103,6 +107,7 @@ namespace Vehicle_parking_Project
                     if (ParkingSlots[i] == id)
                     {
                         ParkingSlots[i] = 0;
+                        break;
                     }
                 }
                 vehicleInParking[id] = false;
@@ -143,14 +148,14 @@ namespace Vehicle_parking_Project
                     {
                         if (st != -1 )
                         {
-                            Console.WriteLine($"{st}-->{st+counter-1} : {counter} m ,");
+                            Console.WriteLine($"{st+1}-->{st+counter} : {counter} m ,");
                             counter = 0;
                             st  = -1;
                         }
                     }
                 }
                 if (counter > 0)
-                    Console.WriteLine($"{st}-->{st+counter - 1} : {counter} m ");
+                    Console.WriteLine($"{st+1}-->{st+counter} : {counter} m ");
             }
             else
             {
